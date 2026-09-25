@@ -1,0 +1,117 @@
+---
+import Base from '../layouts/Base.astro';
+import '../styles/global.css';
+
+const products = [
+  {
+    name: 'Party Food Planner',
+    desc: 'Helps you estimate how much food, drinks, and supplies you need for BBQs, birthdays, potlucks, graduation parties, and more.',
+    category: 'utilities', kind: 'Utility', status: 'Available', platform: 'Android', art: 'a1',
+    href: 'https://play.google.com/store/apps/details?id=com.mossland.eventcalculator',
+  },
+  {
+    name: 'Coffee Calories',
+    desc: 'A simple, brand-neutral calculator for estimating the calories in customized coffee drinks.',
+    category: 'utilities', kind: 'Utility', status: 'Available', platform: 'Android', art: 'a2',
+    href: 'https://play.google.com/store/apps/details?id=com.mossland.coffee_calories',
+  },
+  {
+    name: 'Dice Merge: Puzzle Clear!',
+    desc: 'A compact puzzle game where you place dice, merge matching values, and build satisfying chain clears.',
+    category: 'games', kind: 'Game', status: 'Available', platform: 'Android', art: 'a3',
+    href: null, // TODO: add Google Play link once released
+  },
+  {
+    name: 'CPD Chinese Picture Dictionary',
+    desc: 'Chinese vocabulary in pictures.',
+    category: 'soon', kind: 'Learning', status: 'Coming soon', platform: 'Android', art: 'a4',
+    href: null,
+  },
+];
+const filters = [
+  ['all', 'All'], ['utilities', 'Utilities'], ['games', 'Games'], ['soon', 'Coming soon'],
+];
+---
+<Base title="Rainpuddle — Independent apps & games">
+  <main>
+    <section class="hero">
+      <div class="wrap">
+        <p class="eyebrow">Independent software studio</p>
+        <h1>Practical tools. Playful ideas.</h1>
+        <p class="lead">Rainpuddle is an independent software studio creating useful apps, learning tools, and original games.</p>
+        <a class="btn" href="#products">See our products</a>
+      </div>
+    </section>
+
+    <section id="products" style="padding-top:24px">
+      <div class="wrap">
+        <h2>Products</h2>
+        <p class="sub">Practical utilities and playful games, at every stage from released to still in the works.</p>
+        <div class="filters" role="group" aria-label="Filter products">
+          {filters.map(([key, label], i) => (
+            <button type="button" data-filter={key} aria-pressed={i === 0 ? 'true' : 'false'}>{label}</button>
+          ))}
+        </div>
+        <div class="grid">
+          {products.map((p) => (
+            <article class="card" data-category={p.category}>
+              <div class={`art ${p.art}`} aria-hidden="true">
+                <svg viewBox="0 0 64 64" fill="none" stroke="#17303d" stroke-width="2.5"><ellipse cx="32" cy="38" rx="26" ry="11"/><ellipse cx="32" cy="38" rx="13" ry="5.5"/><path d="M32 8c5 8 9 13 9 19a9 9 0 0 1-18 0c0-6 4-11 9-19z"/></svg>
+              </div>
+              <div class="body">
+                <div class="badges">
+                  <span class={`badge ${p.status === 'Coming soon' ? 'soon' : ''}`}>{p.status}</span>
+                  <span class="badge plain">{p.kind}</span>
+                  <span class="badge plain">{p.platform}</span>
+                </div>
+                <h3>{p.name}</h3>
+                <p>{p.desc}</p>
+                <div>
+                  {p.status === 'Coming soon'
+                    ? <span class="btn disabled">In development</span>
+                    : p.href
+                      ? <a class="btn" href={p.href} rel="noopener">Get it on Google Play</a>
+                      : <span class="btn disabled">Google Play — arriving soon</span>}
+                </div>
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section id="about" class="about">
+      <div class="wrap cols">
+        <div>
+          <p class="eyebrow">About</p>
+          <h2>Independent by design</h2>
+        </div>
+        <div>
+          <p>Rainpuddle is an independent studio. We build our apps and games ourselves, keep them focused, and decide what to make based on what is useful and enjoyable rather than what is fashionable.</p>
+          <p>We are privacy-minded: our apps do not require accounts and do not intentionally collect personal information. <a href="/privacy/">Read the privacy policy</a>.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="wrap">
+        <h2>Contact</h2>
+        <p class="sub">Product questions, partnership inquiries, or support — one inbox for all of it.</p>
+        <div class="contact-box">
+          <p>We read every message. Tell us which app you are writing about and we will get back to you.</p>
+          <a class="btn" href="mailto:support@rainpuddle.app">support@rainpuddle.app</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script is:inline>
+    const buttons = document.querySelectorAll('.filters button');
+    const cards = document.querySelectorAll('.card');
+    buttons.forEach((b) => b.addEventListener('click', () => {
+      const f = b.dataset.filter;
+      buttons.forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
+      cards.forEach((c) => { c.hidden = !(f === 'all' || c.dataset.category === f); });
+    }));
+  </script>
+</Base>

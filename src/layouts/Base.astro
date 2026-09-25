@@ -1,0 +1,39 @@
+---
+interface Props { title: string; description?: string }
+const { title, description = 'Rainpuddle is an independent software studio creating useful apps, learning tools, and original games.' } = Astro.props;
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+  </head>
+  <body>
+    <header class="site">
+      <div class="wrap">
+        <a class="brand" href="/"><img src="/favicon.svg" alt="" />Rainpuddle</a>
+        <nav>
+          <a href="/#products">Products</a>
+          <a href="/#about">About</a>
+          <a href="/#contact">Contact</a>
+        </nav>
+      </div>
+    </header>
+    <slot />
+    <footer>
+      <div class="wrap">
+        <span>© {new Date().getFullYear()} Rainpuddle. Independent apps &amp; games.</span>
+        <span>
+          <a href="/privacy/">Privacy Policy</a>
+          <a href="mailto:support@rainpuddle.app">support@rainpuddle.app</a>
+        </span>
+      </div>
+    </footer>
+  </body>
+</html>
