@@ -6,25 +6,32 @@ const products = [
   {
     name: 'Party Food Planner',
     desc: 'Helps you estimate how much food, drinks, and supplies you need for BBQs, birthdays, potlucks, graduation parties, and more.',
-    category: 'utilities', kind: 'Utility', status: 'Available', platform: 'Android', art: 'a1',
+    category: 'utilities', kind: 'Utility', status: 'Available', platform: 'Android', store: 'Google Play', art: 'a1',
     href: 'https://play.google.com/store/apps/details?id=com.mossland.eventcalculator',
   },
   {
     name: 'Coffee Calories',
     desc: 'A simple, brand-neutral calculator for estimating the calories in customized coffee drinks.',
-    category: 'utilities', kind: 'Utility', status: 'Available', platform: 'Android', art: 'a2',
+    category: 'utilities', kind: 'Utility', status: 'Available', platform: 'Android', store: 'Google Play', art: 'a2',
     href: 'https://play.google.com/store/apps/details?id=com.mossland.coffee_calories',
+  },
+  {
+    name: 'Bulk Manage — ChatGPT Organizer',
+    desc: 'Organize ChatGPT with local folders, bulk actions, and easier new-tab navigation.',
+    category: 'utilities', kind: 'Utility', status: 'Available', platform: 'Browser Extension', store: 'Chrome Web Store', art: 'a5',
+    href: null, // TODO: add Chrome Web Store link once released
+    privacyHref: '/privacy/bulk-manage/',
   },
   {
     name: 'Dice Merge: Puzzle Clear!',
     desc: 'A compact puzzle game where you place dice, merge matching values, and build satisfying chain clears.',
-    category: 'games', kind: 'Game', status: 'Available', platform: 'Android', art: 'a3',
+    category: 'games', kind: 'Game', status: 'Available', platform: 'Android', store: 'Google Play', art: 'a3',
     href: null, // TODO: add Google Play link once released
   },
   {
     name: 'CPD Chinese Picture Dictionary',
     desc: 'Chinese vocabulary in pictures.',
-    category: 'soon', kind: 'Learning', status: 'Coming soon', platform: 'Android', art: 'a4',
+    category: 'soon', kind: 'Learning', status: 'Coming soon', platform: 'Android', store: 'Google Play', art: 'a4',
     href: null,
   },
 ];
@@ -70,8 +77,9 @@ const filters = [
                   {p.status === 'Coming soon'
                     ? <span class="btn disabled">In development</span>
                     : p.href
-                      ? <a class="btn" href={p.href} rel="noopener">Get it on Google Play</a>
-                      : <span class="btn disabled">Google Play — arriving soon</span>}
+                      ? <a class="btn" href={p.href} rel="noopener">{`Get it on ${p.store}`}</a>
+                      : <span class="btn disabled">{`${p.store} — arriving soon`}</span>}
+                  {p.privacyHref && <a class="privacy-link" href={p.privacyHref}>Privacy policy</a>}
                 </div>
               </div>
             </article>
